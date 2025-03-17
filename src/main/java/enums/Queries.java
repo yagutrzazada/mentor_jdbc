@@ -13,6 +13,8 @@ public enum Queries {
 
     FIND_ALL_AUTHORS("SELECT * FROM Author;"),
 
+    FIND_Author_BY_ID("SELECT * FROM Author  where Author.id=?;"),
+
     UPDATE_AUTHOR("""
             UPDATE Author SET name = ?, last_name = ? WHERE id = ?;
             """),
@@ -41,7 +43,7 @@ public enum Queries {
 
     FIND_ALL_BOOKS("SELECT Book.*, Author.name as author_name ,Author.last_name as author_last_name From Book b inner Join Author a on a.id=b.author_id;"),
 
-    FIND_BY_ID("SELECT * FROM Book  where Book.id=?;"),
+    FIND_Book_BY_ID("SELECT * FROM Book  where Book.id=?;"),
 
     UPDATE_BOOK("""
                 UPDATE Book SET name = ?,year=?, author_id = ? WHERE id = ?;

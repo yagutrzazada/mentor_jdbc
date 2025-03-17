@@ -1,17 +1,17 @@
+import repository.AuthorRepository;
+
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class Main {
 
-    public void print(){
-        System.out.println("SALAM");
-    }
 
-    public void print(String message){
-        System.out.println(message);
-    }
+    public static void main(String[] args) throws SQLException {
+        Connection connection = Config.getConnection();
+        AuthorRepository authorRepository = new AuthorRepository();
+        //authorRepository.insertAuthor(connection,"Mark","Tvain");
+        authorRepository.DeleteAuthor(connection,1L);
 
-    public static void main(String []args){
-       Connection connection =Config.getConnection();
-        System.out.println(connection);
+
     }
 }

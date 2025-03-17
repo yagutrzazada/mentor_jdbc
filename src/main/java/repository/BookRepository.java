@@ -21,9 +21,9 @@ public class BookRepository {
     public void insertBook(Connection connection, String name, int year, int author_id) throws SQLException {
         String query = Queries.INSERT_BOOK.getQuery();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, name);
-        preparedStatement.setInt(2, year);
-        preparedStatement.setInt(3, author_id);
+        preparedStatement.setString(2, name);
+        preparedStatement.setInt(3, year);
+        preparedStatement.setInt(4, author_id);
         preparedStatement.executeUpdate();
     }
 
@@ -47,13 +47,40 @@ public class BookRepository {
     }
 
     public void updateBook(Connection connection) throws SQLException {
-        try{
-            String query=Queries.FIND_BY_ID.getQuery();
-        }catch (NotFoundException e){
-            System.out.println("Cant find the id ");
+        try {
+            String query = Queries.FIND_Book_BY_ID.getQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+        } catch (NotFoundException e) {
+            throw new RuntimeException("Cant find the id ", e);
         }
         String query = Queries.UPDATE_BOOK.getQuery();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.executeUpdate();
+    }
+
+    public ResultSet findByID(Connection connection, Long id) throws SQLException {
+        try {
+            String query = Queries.FIND_Book_BY_ID.getQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery(query);
+            preparedStatement.setLong(1, id);
+            return resultSet;
+
+        } catch (NotFoundException e) {
+            throw new RuntimeException("Cant find the id ", e);
+        }
+    }
+
+    public void DeleteBook(Connection connection, Long id) throws SQLException {
+        try {
+            String query = Queries.DELETE_BOOK.getQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, id);
+        } catch (NotFoundException e) {
+            throw new RuntimeException("Cant find the id ", e);
+        }
+
 
     }
 }
